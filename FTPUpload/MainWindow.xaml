@@ -11,7 +11,7 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Title="FTPUpload" 
-        Width="640"
+        Width="800"
         Height="600" 
         ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen">
@@ -47,18 +47,18 @@
 
             <TextBox x:Name="txtFtpLink" 
                      Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                     Width="410"
+                     Width="610"
                      materialDesign:HintAssist.Hint="Link do FTP"
                      Margin="5"/>
 
             <TextBox x:Name="txtFtpUser" 
                      Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" 
                      materialDesign:HintAssist.Hint="Usuário"
-                     Width="410"
+                     Width="610"
                      Margin="5"/>
 
             <PasswordBox x:Name="txtFtpPass" 
-                         Width="410"
+                         Width="610"
                          Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"
                          materialDesign:HintAssist.Hint="Senha"
                          Margin="5"/>
@@ -71,7 +71,7 @@
                     Grid.Row="3">
             
             <TextBox x:Name="txtArquivo"
-                     Width="300"
+                     Width="500"
                      Height="30" 
                      Margin="5" 
                      materialDesign:HintAssist.Hint="Selecione o arquivo a ser enviado para o servidor" 
@@ -95,7 +95,7 @@
                     Margin="5">
             
             <ProgressBar x:Name="pgbStatus" 
-                         Width="410"
+                         Width="610"
                          Maximum="{Binding Maximo}"
                          Value="{Binding ValorAtual}"
                          Minimum="0" 

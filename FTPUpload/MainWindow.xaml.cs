@@ -128,17 +128,21 @@ namespace FTPUpload
 
                     catch (WebException)
                     {
-                        MessageBox.Show("Operação cancelada, verifique sua conexão com a internet e tente novamente.", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Erro: Verifique sua conexão com a internet e tente novamente.", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
                     catch (OperationCanceledException)
                     {
                         MessageBox.Show("Operação cancelada!", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    catch(UriFormatException)
+                    {
+                        MessageBox.Show("Erro: Insira o URI de seu FTP corretamente e tente novamente.", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Erro: {ex.Message}", "FTI", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show($"Erro: {ex.Message}", "FTUpload", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     finally
                     {
@@ -148,7 +152,7 @@ namespace FTPUpload
             }
             else
             {
-                MessageBox.Show("Insira o arquivo que deseja enviar ao servidor");
+                MessageBox.Show("Preencha todos os campos e tente novamente!", "FTPUpload" , MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         public async Task EnviarArquivoFTP(string arquivo, string ftplink, string ftpuser, string ftppass)
@@ -159,7 +163,7 @@ namespace FTPUpload
                 {
                     FileInfo arquivoInfo = new FileInfo(arquivo);
 
-                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(ftplink);
+                    FtpWebRequest request = (FtpWebRequest)WebRequest.Create(new Uri(ftplink));
 
                     request.Method = WebRequestMethods.Ftp.UploadFile;
                     request.Credentials = new NetworkCredential(ftpuser, ftppass);
@@ -198,7 +202,10 @@ namespace FTPUpload
 
         private bool validaInformacao()
         {
-            if (string.IsNullOrEmpty(txtArquivo.Text))
+            if (string.IsNullOrEmpty(txtArquivo.Text) ||
+                    string.IsNullOrEmpty(txtFtpUser.Text) ||
+                    string.IsNullOrEmpty(txtFtpPass.Password) ||
+                    string.IsNullOrEmpty(txtFtpLink.Text))
             {
                 return false;
             }
