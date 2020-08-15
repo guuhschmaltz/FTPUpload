@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace FTPUpload
 {
@@ -63,7 +64,6 @@ namespace FTPUpload
         {
             InitializeComponent();
             DataContext = this;
-            CleanView();
         }
 
         private void CleanView()
@@ -76,6 +76,7 @@ namespace FTPUpload
             txtFtpLink.Text = null;
             txtFtpPass.Password = null;
             txtFtpUser.Text = null;
+            txtFtpPasta.Text = null;
         }
 
         private void btnPesquisar_Click(object sender, RoutedEventArgs e)
@@ -110,8 +111,9 @@ namespace FTPUpload
             if (validaInformacao())
             {
                 if (!string.IsNullOrEmpty(txtArquivo.Text) || 
-                    !string.IsNullOrEmpty(txtFtpUser.Text) || 
-                    !string.IsNullOrEmpty(txtFtpPass.Password) || 
+                    !string.IsNullOrEmpty(txtFtpUser.Text) ||
+                    !string.IsNullOrEmpty(txtFtpPass.Password) ||
+                    !string.IsNullOrEmpty(txtFtpPasta.Text) ||
                     !string.IsNullOrEmpty(txtFtpLink.Text))
                 {
                     pgbStatus.Visibility = Visibility.Visible;
@@ -119,10 +121,11 @@ namespace FTPUpload
                     btnEnviar.IsEnabled = false;
                     btnLimpar.IsEnabled = false;
 
+                    string urlArquivoFormatado = txtFtpLink.Text + txtFtpPasta.Text + Path.GetFileName(txtArquivo.Text);
                     try
                     {
 
-                        await EnviarArquivoFTP(txtArquivo.Text, txtFtpLink.Text, txtFtpUser.Text, txtFtpPass.Password);
+                        await EnviarArquivoFTP(txtArquivo.Text, urlArquivoFormatado, txtFtpUser.Text, txtFtpPass.Password);
                         MessageBox.Show("Arquivo enviado ao servidor com sucesso!", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
@@ -133,11 +136,11 @@ namespace FTPUpload
 
                     catch (OperationCanceledException)
                     {
-                        MessageBox.Show("Operação cancelada!", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Erro: Operação cancelada!", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     catch(UriFormatException)
                     {
-                        MessageBox.Show("Erro: Insira o URI de seu FTP corretamente e tente novamente.", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Erro: Verifique suas credências e o link de seu FTP e tente novamente!", "FTPUpload", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
 
                     catch (Exception ex)
@@ -155,7 +158,7 @@ namespace FTPUpload
                 MessageBox.Show("Preencha todos os campos e tente novamente!", "FTPUpload" , MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        public async Task EnviarArquivoFTP(string arquivo, string ftplink, string ftpuser, string ftppass)
+        public async Task EnviarArquivoFTP(string arquivo, string ftplink, string ftpuser, string ftpass)
         {
             try
             {
@@ -166,7 +169,7 @@ namespace FTPUpload
                     FtpWebRequest request = (FtpWebRequest)WebRequest.Create(new Uri(ftplink));
 
                     request.Method = WebRequestMethods.Ftp.UploadFile;
-                    request.Credentials = new NetworkCredential(ftpuser, ftppass);
+                    request.Credentials = new NetworkCredential(ftpuser, ftpass);
                     request.UseBinary = true;
                     request.ContentLength = arquivoInfo.Length;
                     //Maximo = arquivoInfo.Length
@@ -205,6 +208,7 @@ namespace FTPUpload
             if (string.IsNullOrEmpty(txtArquivo.Text) ||
                     string.IsNullOrEmpty(txtFtpUser.Text) ||
                     string.IsNullOrEmpty(txtFtpPass.Password) ||
+                    string.IsNullOrEmpty(txtFtpPasta.Text) ||
                     string.IsNullOrEmpty(txtFtpLink.Text))
             {
                 return false;

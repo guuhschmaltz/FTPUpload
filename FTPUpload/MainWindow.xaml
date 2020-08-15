@@ -45,23 +45,38 @@
                     Grid.RowSpan="3"
                     Grid.Row="1">
 
+            <StackPanel Orientation="Horizontal">
             <TextBox x:Name="txtFtpLink" 
                      Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                     Width="610"
+                     Width="300"
                      materialDesign:HintAssist.Hint="Link do FTP"
-                     Margin="5"/>
+                     Text="ftp://seuftpaqui.com.br (Exemplo)"
+                     Margin="5"
+                     TabIndex="1"/>
+
+            <TextBox x:Name="txtFtpPasta" 
+                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                     Width="300"
+                     materialDesign:HintAssist.Hint="Local da pasta"
+                     Text="/public_html/arquivos/ (Exemplo)"
+                     Margin="5"
+                     TabIndex="2"/>
+                
+            </StackPanel>
 
             <TextBox x:Name="txtFtpUser" 
                      Style="{StaticResource MaterialDesignFilledTextFieldTextBox}" 
                      materialDesign:HintAssist.Hint="Usuário"
                      Width="610"
-                     Margin="5"/>
+                     Margin="5"
+                     TabIndex="3"/>
 
             <PasswordBox x:Name="txtFtpPass" 
                          Width="610"
                          Style="{StaticResource MaterialDesignFilledPasswordFieldPasswordBox}"
                          materialDesign:HintAssist.Hint="Senha"
-                         Margin="5"/>
+                         Margin="5"
+                         TabIndex="4"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -83,6 +98,7 @@
                     Content="Procurar" 
                     Margin="5"
                     ToolTip="Selecione o arquivo que irá ser enviado para o servidor FTP" 
+                    TabIndex="5"
                     Click="btnPesquisar_Click"/>
             
         </StackPanel>
@@ -103,6 +119,7 @@
                          materialDesign:TransitionAssist.DisableTransitions="True" 
                          Grid.Column="1"
                          Grid.Row="2"
+                         Visibility="Collapsed"
                          Background="#FF9C99DC" BorderBrush="#FF6F569C"/>
             
             <TextBlock x:Name="txtProgresso" 
@@ -124,13 +141,16 @@
                     Width="200"
                     ToolTip="Envia o arquivo para o servidor FTP" 
                     Margin="5" 
-                    Click="btnEnviar_Click"/>
+                    Click="btnEnviar_Click"
+                    IsDefault="True"
+                    TabIndex="6"/>
             
             <Button x:Name="btnLimpar"
                     Content="Limpar"
                     Width="200"
-                    ToolTip="Limpa a caixa de envio com o arquivo selecionado transmissão"
+                    ToolTip="Limpa todos os campos da aplicação"
                     Margin="5"
+                    TabIndex="7"
                     Click="btnLimpar_Click"/>
         </StackPanel>
 
