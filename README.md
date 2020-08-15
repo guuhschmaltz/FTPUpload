@@ -25,8 +25,7 @@ Projeto simples realizado com intuito de facilitar o upload de arquivos para um 
   
   
 
-
-- ### **Instalação e Utilização**
+- ### **Instalando**
 
 ```sh
   # Clonar o repositório
