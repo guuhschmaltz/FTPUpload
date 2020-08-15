@@ -1,8 +1,9 @@
 <h1 align="center"> FTPUpload
+![](https://github.com/guuhschmaltz/FTPUpload/blob/master/.github/screenshots/ftpupload.png?raw=true)
+
 ![GitHub top language](https://img.shields.io/github/languages/top/guuhschmaltz/FTPUpload)
 ![GitHub repo size](https://img.shields.io/github/repo-size/guuhschmaltz/FTPUpload) 
 
-![](https://github.com/guuhschmaltz/FTPUpload/blob/master/.github/screenshots/ftpupload.png?raw=true)
 </h1>
 
 ## :book: Sobre
